@@ -14,6 +14,7 @@ public class run {
         //能量消耗率最大值
         double maxECR = 0.06;
 
+
         Sensor[] allSensor = WsnFunction.initSensors(networkSize, nodenum, minECR, maxECR);
         System.out.println("随机创建的节点信息如下");
         for(Sensor node:allSensor) {
