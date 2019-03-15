@@ -4,7 +4,7 @@ public class run {
 
     public static void main(String[] args){
         //网络规模
-        double networkSize = 100;
+        double networkSize = 200;
         //传感器节点个数
         int nodenum = 1500;
         //系统当前时间初始为0s
@@ -21,4 +21,5 @@ public class run {
             System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
         }
     }
+
 }

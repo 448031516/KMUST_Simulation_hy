@@ -3,7 +3,7 @@ package multihoptest;
 public class MCV {
 
     static Point location = new Point(0,0);//小车的位置
-    static double maxRadius = 2.7;//充电半径
+    static double maxRadius = 5;//充电半径
     static double v = 2;//小车速度2m/s
     static double transPower = 5;//充电能耗为5W=5J/s
     static double travelPower= 8;//行驶能耗J/m
