@@ -11,7 +11,10 @@ public class Point {
         x = lx;
         y = ly;
     }
-
+    public Point(){
+        x=0;
+        y=0;
+    }
     //求平面两点之间的距离
     public static double getDistance(Point p1,Point p2) {
         double distance = 0.0;
