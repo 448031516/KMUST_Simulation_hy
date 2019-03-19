@@ -6,14 +6,21 @@ public class Point {
 
     double x;
     double y;
+    int num;
     public Point(double lx,double ly) {
+        x = lx;
+        y = ly;
+    }
+    public Point(int n,double lx,double ly) {
         // TODO Auto-generated constructor stub
         x = lx;
         y = ly;
+        num = n;
     }
     public Point(){
         x=0;
         y=0;
+        num=0;
     }
     //求平面两点之间的距离
     public static double getDistance(Point p1,Point p2) {

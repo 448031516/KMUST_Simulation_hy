@@ -60,6 +60,7 @@ public class WsnFunction {
         }
         return sensors;
     }
+    //判断传感器是否在某个
 
    /* //创建与需要被充电的节点对应的圆
     public static Circle[] creatCircle(Sensor...chargeSensor) {
