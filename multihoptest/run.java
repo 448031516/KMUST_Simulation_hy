@@ -20,6 +20,10 @@ public class run {
         for(Sensor node:allSensor) {
             System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
         }
+        honeycomb test =new honeycomb(4.00,200.00);
+        for(Sensor node:allSensor){
+            System.out.println(WsnFunction.judge(node,test));
+        }
     }
 
 }
