@@ -24,13 +24,14 @@ public class WsnFunction {
 //判断传感器在哪个正六边形中，并返回正六边形中心的编号
     public static int judge(Sensor i,honeycomb j){
         int p=0;
-        for (;p<=j.location.length;p++) {
+        for (;p<=j.location.length-1;p++) {
             double  x= Math.abs(i.location.x - j.location[p].x);
             double  y= Math.abs(i.location.y - j.location[p].y);
             if (j.edge-y>x/Math.sqrt(3))
                 break;
         }
-        return p;
+        if(p==j.location.length) return 0;
+        else return p;
     }
     //在指定区间大小networkSize获得n个随机数
     private static double[] getRandom(double networkSize,int n,long seed) {

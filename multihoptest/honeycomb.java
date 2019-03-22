@@ -94,5 +94,6 @@ public class honeycomb {
         for(int i=0;i<k.length;i++) {
             System.out.println("第"+k[i].num+"个"+"坐标("+k[i].x+","+k[i].y+")");
         }
+        System.out.println(test.location.length);
     }
 }
