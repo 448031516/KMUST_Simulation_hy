@@ -20,10 +20,10 @@ public class run {
 //        for(Sensor node:allSensor) {
 //            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
 //        }
-        honeycomb test =new honeycomb(4.00,200.00);
-        Point[] k =test.creat_honeycomb(4.00,200.00);
+        honeycomb test =new honeycomb(4.00,210.00);
+        Point[] k =test.creat_honeycomb(4.00,210.00);
         for(Sensor node:allSensor){
-            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+")属于编号为"+WsnFunction.judge(node,test)+"的正六边形，其中心坐标为"+"("+k[WsnFunction.judge(node,test)].x+","+k[WsnFunction.judge(node,test)].y+")");
+            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+")属于编号为"+WsnFunction.judgeHoneycomb(node,test)+"的正六边形，其中心坐标为"+"("+k[WsnFunction.judgeHoneycomb(node,test)].x+","+k[WsnFunction.judgeHoneycomb(node,test)].y+")");
         }
     }
 

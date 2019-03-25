@@ -22,7 +22,7 @@ public class WsnFunction {
     }
 
 //判断传感器在哪个正六边形中，并返回正六边形中心的编号
-    public static int judge(Sensor i,honeycomb j){
+    public static int judgeHoneycomb(Sensor i,honeycomb j){
         int p=0;
         for (;p<=j.location.length-1;p++) {
             double  x= Math.abs(i.location.x - j.location[p].x);
@@ -33,6 +33,16 @@ public class WsnFunction {
         if(p==j.location.length) return 0;
         else return p;
     }
+//判断传感器是否在MC直接覆盖区域内
+    public static boolean judge_inMC(Sensor i){
+        double distance = Point.getDistance(i.location,MCV.location);
+        if(distance>=MCV.maxRadius) return false;
+        else return true;
+    }
+
+    //
+
+
     //在指定区间大小networkSize获得n个随机数
     private static double[] getRandom(double networkSize,int n,long seed) {
         double[] rm = new double[n];
