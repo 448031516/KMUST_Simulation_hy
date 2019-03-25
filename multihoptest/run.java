@@ -20,11 +20,12 @@ public class run {
 //        for(Sensor node:allSensor) {
 //            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
 //        }
-        honeycomb test =new honeycomb(4.00,210.00);
-        Point[] k =test.creat_honeycomb(4.00,210.00);
-        for(Sensor node:allSensor){
-            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+")属于编号为"+WsnFunction.judgeHoneycomb(node,test)+"的正六边形，其中心坐标为"+"("+k[WsnFunction.judgeHoneycomb(node,test)].x+","+k[WsnFunction.judgeHoneycomb(node,test)].y+")");
+        honeycomb test =new honeycomb(4.00,210.00);    //创建蜂窝
+        Point[] k =test.creat_honeycomb(4.00,210.00);//获取每个蜂窝的中心坐标
+        for(int i=0;i<allSensor.length;i++){
+            allSensor[i].inHoneycomb=WsnFunction.judgeHoneycomb(allSensor[i],test);//将每个传感器节点分簇
+            System.out.println("编号:"+allSensor[i].number+" 坐标:("+allSensor[i].location.x+","+allSensor[i].location.y+")属于编号为"+allSensor[i].inHoneycomb+"的正六边形，其中心坐标为"+"("+k[WsnFunction.judgeHoneycomb(allSensor[i],test)].x+","+k[WsnFunction.judgeHoneycomb(allSensor[i],test)].y+")");
         }
-    }
 
+    }
 }

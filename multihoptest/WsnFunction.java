@@ -39,8 +39,30 @@ public class WsnFunction {
         if(distance>=MCV.maxRadius) return false;
         else return true;
     }
-
-    //
+    //初步确定锚点
+    public static Point[][] initialAnchor(honeycomb q){
+        Point[][] anchor = new Point[q.location.length][6];
+        for(int i=0;i<q.location.length;i++) {
+            anchor[i][0] = new Point(q.location[i].num,q.location[i].x, q.location[i].y + q.edge);
+            anchor[i][1] = new Point(q.location[i].num,q.location[i].x + Math.sqrt(3)*q.edge/2, q.location[i].y + q.edge/2);
+            anchor[i][2] = new Point(q.location[i].num,q.location[i].x + Math.sqrt(3)*q.edge/2, q.location[i].y - q.edge/2);
+            anchor[i][3] = new Point(q.location[i].num,q.location[i].x, q.location[i].y - q.edge);
+            anchor[i][4] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y - q.edge/2);
+            anchor[i][6] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y + q.edge/2);
+        }
+        return anchor;
+    }
+    //MC在锚点p时覆盖到的传感器节点个数
+    public static int cloverNUM(Point p,Sensor[] allSensor){
+        int num=0;
+        for (Sensor node:allSensor) {
+            double distance = Point.getDistance(p, node.location);
+            if (distance <= MCV.maxRadius) num++;
+        }
+    }
+//    public static Point[] Anchor(Point[][] p){
+//
+//    }
 
 
     //在指定区间大小networkSize获得n个随机数

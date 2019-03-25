@@ -2,7 +2,7 @@ package multihoptest;
 
 import java.io.*;
 public class honeycomb {
-    public    Point[] location;                   //每个蜂窝正六边形的中心坐标位置
+    public    Point[] location;                   //每个蜂窝正六边形的中心坐标位置及其编号
     public   double edge;                      //正六边形的边长
     private  double networkSize;             //方形网络边长
 

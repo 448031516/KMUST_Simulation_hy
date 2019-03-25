@@ -7,6 +7,7 @@ public class MCV {
     static double v = 2;//小车速度2m/s
     static double transPower = 5;//充电能耗为5W=5J/s
     static double travelPower= 8;//行驶能耗J/m
+    static Point[] Anchor={ };
 
     /**
     * Don't let anyone instantiate this class.
