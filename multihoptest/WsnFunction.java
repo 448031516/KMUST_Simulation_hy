@@ -48,7 +48,7 @@ public class WsnFunction {
             anchor[i][2] = new Point(q.location[i].num,q.location[i].x + Math.sqrt(3)*q.edge/2, q.location[i].y - q.edge/2);
             anchor[i][3] = new Point(q.location[i].num,q.location[i].x, q.location[i].y - q.edge);
             anchor[i][4] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y - q.edge/2);
-            anchor[i][6] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y + q.edge/2);
+            anchor[i][5] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y + q.edge/2);
         }
         return anchor;
     }
