@@ -26,6 +26,13 @@ public class run {
             allSensor[i].inHoneycomb=WsnFunction.judgeHoneycomb(allSensor[i],test);//将每个传感器节点分簇
             System.out.println("编号:"+allSensor[i].number+" 坐标:("+allSensor[i].location.x+","+allSensor[i].location.y+")属于编号为"+allSensor[i].inHoneycomb+"的正六边形，其中心坐标为"+"("+k[WsnFunction.judgeHoneycomb(allSensor[i],test)].x+","+k[WsnFunction.judgeHoneycomb(allSensor[i],test)].y+")");
         }
+        //选取锚点
+        Point[][] Anchor=new Point[k.length][6];
+        Anchor=WsnFunction.initialAnchor(test);     //初选锚点
+        for (int i=0;i<k.length;i++){
+
+        }
+
 
     }
 }

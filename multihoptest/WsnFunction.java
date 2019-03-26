@@ -57,8 +57,9 @@ public class WsnFunction {
         int num=0;
         for (Sensor node:allSensor) {
             double distance = Point.getDistance(p, node.location);
-            if (distance <= MCV.maxRadius) num++;
+            if(node.inHoneycomb==p.num && distance <= MCV.maxRadius) num++;
         }
+        return num;
     }
 //    public static Point[] Anchor(Point[][] p){
 //
