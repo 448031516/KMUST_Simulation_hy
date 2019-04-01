@@ -29,12 +29,16 @@ public class run {
         //选取锚点
         Point[] Anchor = new Point[k.length];   //存放每个簇的锚点坐标，Anchor[0]表示第0个正六边形区域内的锚点位置
         Point[][] initialAnchor = WsnFunction.initialAnchor(test);     //初选锚点
-        for (int i=0;i<k.length;i++){
+//        for(int i=0;i<Anchor.length;i++)
+//            for(int j=0;j<6;j++)
+//            System.out.println(initialAnchor[i][j].x+","+initialAnchor[i][j].y);
+        for (int i=0;i<Anchor.length;i++){
             int num=0,temp_1=0;
             for (int j=0;j<6;j++) {
-                if(num < WsnFunction.cloverNUM(initialAnchor[i][j],allSensor))
+                if(num < WsnFunction.cloverNUM(initialAnchor[i][j],allSensor)){
                     num = WsnFunction.cloverNUM(initialAnchor[i][j],allSensor);
                     temp_1=j;
+                }
             }
             System.out.println(num);
             Anchor[i]=initialAnchor[i][temp_1];    //确定第i个正六边形区域的锚点坐标
