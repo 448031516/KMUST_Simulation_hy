@@ -99,8 +99,8 @@ public class WsnFunction {
         Sensor[] sensors = new Sensor[n];
         //对n个传感器节点初始化
         for(int i=0;i < sensors.length;i++) {
-            //初始化n个节点的编号、位置,节点的编号从1开始,1号节点的索引下标为0
-            sensors[i] = new Sensor(i+1,dx[i],dy[i],networkSize,minECR,maxECR);
+            //初始化n个节点的编号、位置,节点的编号从0开始,0号节点的索引下标为0
+            sensors[i] = new Sensor(i,dx[i],dy[i],networkSize,minECR,maxECR);
         }
         return sensors;
     }

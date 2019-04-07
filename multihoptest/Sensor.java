@@ -49,7 +49,7 @@ public class Sensor {
         //节点的能耗与其和基站的距离是线性关系,且两者成反比:与基站距离越小,能量消耗率越大
         double ec = minECR + (1-(distance/maxDistance))*(maxECR-minECR);
         //新建格式化器，设置格式
-//        DecimalFormat Dformat = new DecimalFormat("0.00");
+                            //        DecimalFormat Dformat = new DecimalFormat("0.00");
 //        String string = Dformat.format(ec);
 //        ec = Double.parseDouble(string);
         return ec;
