@@ -55,6 +55,7 @@ public class run {
 //            System.out.println("第"+Anchor[i].num+"个簇的锚点坐标为（"+Anchor[i].x+"，"+Anchor[i].y+"),且以此为锚点，MC能覆盖到的节点个数为："+num);
         }
 
+        //TSP开始
         int[] best;
 
         //=======================method 1=======================
