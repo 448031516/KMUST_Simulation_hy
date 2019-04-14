@@ -61,6 +61,13 @@ public class WsnFunction {
         }
         return num;
     }
+
+    public static void cloverNODE(Point p,Sensor[] allSensor) {
+        for (int i = 0; i < allSensor.length; i++) {
+            double distance = Point.getDistance(p, allSensor[i].location);
+            if (allSensor[i].inHoneycomb == p.num && distance <= MCV.maxRadius) allSensor[i].isCloverDirect = true;
+        }
+    }
 //    public static Point[] Anchor(Point[][] p){
 //
 //    }

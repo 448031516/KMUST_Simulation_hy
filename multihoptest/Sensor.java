@@ -14,7 +14,7 @@ public class Sensor {
     boolean isCharging = false;//是否需要充电,默认为false表示不需要充电
     boolean isFailure = false;//表示节点是否死亡,false表示未死亡
     int inHoneycomb ;
-    boolean isCluster = false;//是否已经被聚类为某个类里,false表示还未被聚类
+    boolean isCloverDirect = false;//是否已经被inHoneycomb内的锚点直接覆盖
 
     //初始化传感器编号位置,节点能耗为指定值
     public Sensor(int number,double lx,double ly,double ecr) {
