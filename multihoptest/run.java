@@ -31,7 +31,7 @@ public class run {
             //System.out.println("编号:"+allSensor[i].number+" 坐标:("+allSensor[i].location.x+","+allSensor[i].location.y+")属于编号为"+allSensor[i].inHoneycomb+"的正六边形，其中心坐标为"+"("+k[WsnFunction.judgeHoneycomb(allSensor[i],test)].x+","+k[WsnFunction.judgeHoneycomb(allSensor[i],test)].y+")");
         }
 
-        //-----------------------------------选取锚点-------------------------------------------------------
+        //========================选取锚点========================
         Point[] Anchor = new Point[k.length];   //存放每个簇的锚点坐标，Anchor[0]表示第0个正六边形区域内的锚点位置
         Point[][] initialAnchor = WsnFunction.initialAnchor(test);     //初选锚点
 
@@ -59,7 +59,7 @@ public class run {
         }
 
 
-        //---------------------------------整理，删除只能覆盖0个节点的锚点----------------------------------------
+        //========================整理，删除只能覆盖0个节点的锚点========================
         int h = 0; // 设置一个变量作为增量
         // 循环读取Anchor数组的值
         for (Point b : Anchor) {
@@ -87,16 +87,16 @@ public class run {
 //
 //        }
 
-    //-------------------更新节点被覆盖的情况，将能够直接被MC覆盖的节点isCloverDirect置为true------------------
-    for(int i=0;i<Anchor.length;i++){
-        WsnFunction.cloverNODE(Anchor[i],allSensor);
+    //========================更新节点被覆盖的情况，将能够直接被MC覆盖的节点isCloverDirect置为true========================
+    for(int i=0;i<newAnchor.length;i++){
+        WsnFunction.cloverNODE(newAnchor[i],allSensor);
     }
         System.out.println("随机创建的节点信息如下");
         for(Sensor node:allSensor) {
             System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+"）属于序号为"+node.inHoneycomb+"的簇，其能否被直接覆盖到："+node.isCloverDirect+"剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
         }
 
-//        //--------------------------------------TSP开始------------------------------------------------------
+//        //========================TSP开始========================
 //        //使用遗传算法
 //        int[] best; //best[]中存放tsp输出顺序
 //
