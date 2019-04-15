@@ -91,10 +91,16 @@ public class run {
     for(int i=0;i<newAnchor.length;i++){
         WsnFunction.cloverNODE(newAnchor[i],allSensor);
     }
-        System.out.println("随机创建的节点信息如下");
+        System.out.println("更新节点信息如下");
         for(Sensor node:allSensor) {
             System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+"）属于序号为"+node.inHoneycomb+"的簇，其能否被直接覆盖到："+node.isCloverDirect+"剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
         }
+    //========================多跳开始，确定多跳路径========================
+
+
+
+
+
 
 //        //========================TSP开始========================
 //        //使用遗传算法

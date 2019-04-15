@@ -13,8 +13,9 @@ public class Sensor {
     double remainingE = 50;//初始剩余能量等于电池容量
     boolean isCharging = false;//是否需要充电,默认为false表示不需要充电
     boolean isFailure = false;//表示节点是否死亡,false表示未死亡
-    int inHoneycomb ;
+    int inHoneycomb ; //节点所属的簇
     boolean isCloverDirect = false;//是否已经被inHoneycomb内的锚点直接覆盖
+    int multihop=-1;    //未被直接覆盖的节点，其多跳充电的下一条
 
     //初始化传感器编号位置,节点能耗为指定值
     public Sensor(int number,double lx,double ly,double ecr) {
