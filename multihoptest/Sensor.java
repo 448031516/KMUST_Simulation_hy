@@ -39,7 +39,15 @@ public class Sensor {
         maxCapacity = maxC;//初始能量
         remainingE = maxC;//初始剩余能量等于电池容量
     }
-
+    public static double getDistance(Sensor p1,Sensor p2) {
+        double distance = 0.0;
+        //X轴的距离平方
+        double dx = Math.pow(p1.location.x-p2.location.x, 2);
+        //Y轴的距离平方
+        double dy = Math.pow(p1.location.y-p2.location.y, 2);
+        distance = Math.sqrt(dx+dy);
+        return distance;
+    }
 
     //根据节点与基站之间的距离以及网络大小和能量消耗区间,计算某个节点的能量消耗率
     private double calECRate(double distance,double networkSize,double minECR,double maxECR) {
@@ -57,12 +65,13 @@ public class Sensor {
     }
 
     //根据节点与停止点的距离计算节点的能量接受率[1,5]
-    public void setERRate(double distance,double maxP) {
-        if(distance == MCV.maxRadius) erRate = 1;
+    public double setERRate(double distance,double maxP) {
+        double nta,rp;
+        if(distance == MCV.maxRadius) rp = 1;
         else {
             //能量传递效率[0.2,1]
-            double nta = -0.0958*Math.pow(distance, 2) - 0.0377*distance + 1.0;//nta是效率
-            double rp = nta * maxP;
+            nta = -0.0958*Math.pow(distance, 2) - 0.0377*distance + 1.0;//nta是效率
+            rp = nta * maxP;
             //新建格式化器，设置格式,对rp保留两位小数
             DecimalFormat Dformat = new DecimalFormat("0.000");
             //根据格式化器格式化数据
@@ -70,8 +79,9 @@ public class Sensor {
             //将String转为double
             rp = Double.parseDouble(rpStr);
             //得到节点的能量接受率
-            erRate = rp;
+
         }
+        return rp;
     }
 
     /*

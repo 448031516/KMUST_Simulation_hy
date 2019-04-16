@@ -109,8 +109,20 @@ public class run {
             }
         }
        // System.out.println(cluster.length);
+    for (int i=0;i < cluster.length;i++){
+        for(int j=0;j < cluster[i].length;j++){
+            if (!cluster[i][j].isCloverDirect)  {
+            int j_temp=-1;
+                for (int f=0;f < cluster[i].length;f++){
+                    if (cluster[i][f].isCloverDirect && 5*cluster[i][j].setERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]),5) > cluster[i][j].erRate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+                        cluster[i][j].erRate=5*cluster[i][j].setERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]),5);
+                        j_temp = f;
+                }
 
-        //首先确定每个簇内的多跳路由
+            }
+        }
+    }
+
 
 
 
