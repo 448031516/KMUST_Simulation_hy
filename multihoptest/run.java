@@ -91,11 +91,26 @@ public class run {
     for(int i=0;i<newAnchor.length;i++){
         WsnFunction.cloverNODE(newAnchor[i],allSensor);
     }
-        System.out.println("更新节点信息如下");
-        for(Sensor node:allSensor) {
-            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+"）属于序号为"+node.inHoneycomb+"的簇，其能否被直接覆盖到："+node.isCloverDirect+"剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
-        }
+//        System.out.println("更新节点信息如下");
+//        for(Sensor node:allSensor) {
+//            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+"）属于序号为"+node.inHoneycomb+"的簇，其能否被直接覆盖到："+node.isCloverDirect+"剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
+//        }
     //========================多跳开始，确定多跳路径========================
+        //首先，将每一个簇的节点归类放到cluster数组中
+        Sensor[][] cluster= new Sensor[Anchor.length][];
+        for (int i=0; i < Anchor.length;i++){
+            int f=0,num=0;
+           for (int j=0; j < allSensor.length;j++){
+               if(allSensor[j].inHoneycomb==i) num++;
+           }
+           cluster[i] = new Sensor[num];
+            for (int j=0; j < allSensor.length;j++) {
+                if(allSensor[j].inHoneycomb==i) cluster[i][f++] = allSensor[i];
+            }
+        }
+       // System.out.println(cluster.length);
+
+        //首先确定每个簇内的多跳路由
 
 
 
