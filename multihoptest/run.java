@@ -1,15 +1,13 @@
 package multihoptest;
-import java.util.Arrays;
-
 
 
 public class run {
 
     public static void main(String[] args) {
         //网络规模
-        double networkSize = 200;
+        double networkSize = 2000;
         //传感器节点个数
-        int nodenum = 1500;
+        int nodenum = 15000;
         //系统当前时间初始为0s
         int systemTime = 0;
         //能量消耗率最小值
@@ -23,8 +21,8 @@ public class run {
 //        for(Sensor node:allSensor) {
 //            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
 //        }
-        honeycomb test = new honeycomb(8.00, 210.00);    //创建蜂窝
-        Point[] k = test.creat_honeycomb(8.00, 210.00);//获取每个蜂窝的中心坐标
+        honeycomb test = new honeycomb(27.00, 2100.00);    //创建蜂窝
+        Point[] k = test.creat_honeycomb(27.00, 2100.00);//获取每个蜂窝的中心坐标
 
         for (int i = 0; i < allSensor.length; i++) {                //将节点分簇，每个节点的inHoneycomb值表示其所在的簇
             allSensor[i].inHoneycomb = WsnFunction.judgeHoneycomb(allSensor[i], test);
@@ -93,7 +91,7 @@ public class run {
     }
 //        System.out.println("更新节点信息如下");
 //        for(Sensor node:allSensor) {
-//            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+"）属于序号为"+node.inHoneycomb+"的簇，其能否被直接覆盖到："+node.isCloverDirect+"剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
+//            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+"）属于序号为"+node.inHoneycomb+"的簇，其能否被直接覆盖到："+node.isClover+"剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
 //        }
     //========================多跳开始，确定多跳路径========================
         //首先，将每一个簇的节点归类放到cluster数组中
@@ -111,15 +109,33 @@ public class run {
        // System.out.println(cluster.length);
     for (int i=0;i < cluster.length;i++){
         for(int j=0;j < cluster[i].length;j++){
-            if (!cluster[i][j].isCloverDirect)  {
-            int j_temp=-1;
+            if (!cluster[i][j].isClover)  {
+            int     nextHOP=-1 ;
+            double maxERrate=0;
+            boolean change =false;
                 for (int f=0;f < cluster[i].length;f++){
-                    if (cluster[i][f].isCloverDirect && 5*cluster[i][j].setERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]),5) > cluster[i][j].erRate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
-                        cluster[i][j].erRate=5*cluster[i][j].setERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]),5);
-                        j_temp = f;
+                    if (cluster[i][f].isClover && cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f])) > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+                        maxERrate = cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]));
+                        nextHOP = f;
+                        change  = true;
                 }
+                cluster[i][j].erRateEFF=cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][nextHOP]));
+                cluster[i][j].multihop = nextHOP;
 
             }
+        }
+
+
+        double maxERrate=0;
+        int    sensor_maxERrate=-1;
+        for (int f1=0;f1<cluster[i].length;f1++){
+            if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate){
+                maxERrate = cluster[i][f1].erRateEFF;
+                sensor_maxERrate = f1;
+            }
+        }
+        if (sensor_maxERrate >= 0)   {
+            cluster[i][sensor_maxERrate].isClover = true;
         }
     }
 

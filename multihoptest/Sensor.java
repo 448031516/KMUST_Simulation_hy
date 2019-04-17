@@ -10,11 +10,12 @@ public class Sensor {
     double maxCapacity = 50;//电池容量默认50J,所有节点都一样
     double ecRate = 0;//平均能量消耗率J/s,距离基站越近消耗越大
     double erRate = 0;//能量接受率[1,5],与小车位置有关,需要确定好小车充电停止点后,才能确定节点能量接受率
+    double erRateEFF = 0;//能量接收效率，erRate=erRateEFF*maxP
     double remainingE = 50;//初始剩余能量等于电池容量
     boolean isCharging = false;//是否需要充电,默认为false表示不需要充电
     boolean isFailure = false;//表示节点是否死亡,false表示未死亡
     int inHoneycomb ; //节点所属的簇
-    boolean isCloverDirect = false;//是否已经被inHoneycomb内的锚点直接覆盖
+    boolean isClover = false;//是否已经被inHoneycomb内的锚点直接覆盖
     int multihop=-1;    //未被直接覆盖的节点，其多跳充电的下一条
 
     //初始化传感器编号位置,节点能耗为指定值
@@ -64,13 +65,25 @@ public class Sensor {
         return ec;
     }
 
+
+    public double getERRate(double distance) {
+        double nta;
+        if (distance == MCV.maxRadius) nta = 0.2;
+        else {
+            //能量传递效率[0.2,1]
+            nta = -0.000958 * Math.pow(distance, 2) - 0.00377 * distance + 1.0;//nta是效率
+        }
+        if (nta > 0.2) return nta;
+        else return nta = -1;
+    }
+
     //根据节点与停止点的距离计算节点的能量接受率[1,5]
     public double setERRate(double distance,double maxP) {
         double nta,rp;
         if(distance == MCV.maxRadius) rp = 1;
         else {
             //能量传递效率[0.2,1]
-            nta = -0.0958*Math.pow(distance, 2) - 0.0377*distance + 1.0;//nta是效率
+            nta = -0.000958*Math.pow(distance, 2) - 0.00377*distance + 1.0;//nta是效率
             rp = nta * maxP;
             //新建格式化器，设置格式,对rp保留两位小数
             DecimalFormat Dformat = new DecimalFormat("0.000");
