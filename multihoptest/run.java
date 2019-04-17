@@ -108,39 +108,42 @@ public class run {
         }
        // System.out.println(cluster.length);
     // 第i个簇中
-    for (int i=0;i < cluster.length;i++){
+    for (int i=0;i < cluster.length;i++) {
+        while (WsnFunction.IF_noPATH(cluster[i])){
+            cluster[i] = WsnFunction.multihop_PATH(cluster[i]);
 
-        for(int j=0;j < cluster[i].length;j++){
-            if (!cluster[i][j].isClover)  {
-            int     nextHOP=-1 ;
-            double maxERrate=0;
-            boolean change =false;
-                for (int f=0;f < cluster[i].length;f++){
-                    if (cluster[i][f].isClover && cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f])) > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
-                        maxERrate = cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]));
-                        nextHOP = f;
-                        change  = true;
+//        for(int j=0;j < cluster[i].length;j++){
+//            if (!cluster[i][j].isClover)  {
+//            int     nextHOP=-1 ;
+//            double maxERrate=0;
+//            boolean change =false;
+//                for (int f=0;f < cluster[i].length;f++){
+//                    if (cluster[i][f].isClover && cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f])) > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+//                        maxERrate = cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]));
+//                        nextHOP = f;
+//                        change  = true;
+//                }
+//                cluster[i][j].erRateEFF=cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][nextHOP]));
+//                cluster[i][j].multihop = nextHOP;
+//
+//            }
+//        }
+
+            //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
+            double maxERrate = 0;
+            int sensor_maxERrate = -1;
+            for (int f1 = 0; f1 < cluster[i].length; f1++) {
+                if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate) {
+                    maxERrate = cluster[i][f1].erRateEFF;
+                    sensor_maxERrate = f1;
                 }
-                cluster[i][j].erRateEFF=cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][nextHOP]));
-                cluster[i][j].multihop = nextHOP;
-
+            }
+            if (sensor_maxERrate >= 0) {
+                cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
             }
         }
 
-        //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
-        double maxERrate=0;
-        int    sensor_maxERrate=-1;
-        for (int f1=0;f1<cluster[i].length;f1++){
-            if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate){
-                maxERrate = cluster[i][f1].erRateEFF;
-                sensor_maxERrate = f1;
-            }
-        }
-        if (sensor_maxERrate >= 0)   {
-            cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
-        }
     }
-
 
 
 

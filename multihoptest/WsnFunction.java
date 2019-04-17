@@ -111,7 +111,44 @@ public class WsnFunction {
         }
         return sensors;
     }
-    //判断传感器是否在某个
+
+
+    //初步选取多跳路径
+    public static Sensor[] multihop_PATH(Sensor[] cluster){
+
+        for(int i=0;i < cluster.length;i++){
+            if (!cluster[i].isClover)  {
+                int     nextHOP=-1 ;
+                double maxERrate=0;
+                boolean change =false;
+                for (int f=0;f < cluster.length;f++){
+                    if (cluster[f].isClover && cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f])) > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+                        maxERrate = cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f]));
+                    nextHOP = f;
+                    change  = true;
+                }
+                cluster[i].erRateEFF=cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[nextHOP]));
+                cluster[i].multihop = cluster[nextHOP].number;
+            }
+        }
+        return cluster ;
+    }
+    //查询簇中是否还存在没有分配多跳路径的节点，存在没有分配多跳路径的节点就返回true ，否则false
+    public static boolean IF_noPATH (Sensor[] cluster){
+        boolean judge = false;
+        for (int i=0;i < cluster.length; i++){
+            if (!cluster[i].isClover)    judge = true;
+        }
+         return judge;
+    }
+
+
+
+
+
+
+
+
 
    /* //创建与需要被充电的节点对应的圆
     public static Circle[] creatCircle(Sensor...chargeSensor) {
