@@ -122,10 +122,11 @@ public class WsnFunction {
                 double maxERrate=0;
                 boolean change =false;
                 for (int f=0;f < cluster.length;f++){
-                    if (cluster[f].isClover && cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f])) > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+                    if (cluster[f].isClover && cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f])) > maxERrate ){     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
                         maxERrate = cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f]));
-                    nextHOP = f;
-                    change  = true;
+                        nextHOP = f;
+                        change  = true;
+                    }
                 }
                 cluster[i].erRateEFF=cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[nextHOP]));
                 cluster[i].multihop = cluster[nextHOP].number;
