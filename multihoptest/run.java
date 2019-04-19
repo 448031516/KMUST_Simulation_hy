@@ -14,6 +14,8 @@ public class run {
         double minECR = 0.01;
         //能量消耗率最大值
         double maxECR = 0.06;
+        //多跳阈值
+        float THR_erRateEFF = 0.1f;
 
 
         Sensor[] allSensor = WsnFunction.initSensors(networkSize, nodenum, minECR, maxECR);
@@ -108,6 +110,26 @@ public class run {
         }
        // System.out.println(cluster.length);
     // 第i个簇中
+
+        /*
+        *                                 确定多跳路径的算法：
+        * 1.首先确定单个簇内的多跳路径，遍历簇内所有节点，区分被MC直接覆盖的节点集合A与未被MC覆盖的集合B。
+        *
+        * 2.循环遍历集合B中的所有节点，且在每次访问集合B中节点i时，执行以下步骤：
+        *               完整遍历集合A中的每个节点，计算该节点与B中节点i的距离，并确定以此节点为多跳中继节
+        *            点时，B的多跳效率。当遍历完A中每个节点以后，从中找出最大效率的那个节点j，初步将B中i节
+        *            点的下一跳设置为j
+        *
+        * 3.此时已经得到集合B中每个节点的下一跳节点，遍历这些路径，找到具有最大多跳效率的那个路径，并将此路径
+        *   中原属于集合B的节点i加入到集合A中，得到新的集合B与集合A。
+        *
+        * 4.继续循环遍历集合B中的所有节点，循环退出条件：集合B为空。
+        *
+        * 5.此时已经得到该簇的所有多跳路径，根据设置的阈值，排除多跳充电效率低于阈值的部分多跳路径
+        *
+        * 6.根据以上算法遍历所有簇
+        *
+        * */
     for (int i=0;i < cluster.length;i++) {
 
         for (int j=0;j < cluster[i].length; j++)
@@ -116,22 +138,6 @@ public class run {
         while (WsnFunction.IF_noPATH(cluster[i])){
             cluster[i] = WsnFunction.multihop_PATH(cluster[i]); //初选cluster[i]的多跳路径
 
-//        for(int j=0;j < cluster[i].length;j++){
-//            if (!cluster[i][j].isClover)  {
-//            int     nextHOP=-1 ;
-//            double maxERrate=0;
-//            boolean change =false;
-//                for (int f=0;f < cluster[i].length;f++){
-//                    if (cluster[i][f].isClover && cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f])) > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
-//                        maxERrate = cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]));
-//                        nextHOP = f;
-//                        change  = true;
-//                }
-//                cluster[i][j].erRateEFF=cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][nextHOP]));
-//                cluster[i][j].multihop = nextHOP;
-//
-//            }
-//        }
 
             //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
             double maxERrate = 0;
@@ -146,6 +152,12 @@ public class run {
                 cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
             }
         }
+        //排除多跳效率过低的路径
+        for (int j=0;j < cluster[i].length; j++)
+            if (cluster[i][j].erRateEFF < THR_erRateEFF)    {
+                cluster[i][j].isClover = false ;
+                cluster[i][j].multihop = -1 ;
+            }
 
     }
 
