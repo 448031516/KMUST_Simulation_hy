@@ -109,8 +109,12 @@ public class run {
        // System.out.println(cluster.length);
     // 第i个簇中
     for (int i=0;i < cluster.length;i++) {
+
+        for (int j=0;j < cluster[i].length; j++)
+            if(cluster[i][j].isClover)  cluster[i][j].erRateEFF=cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location,Anchor[i]));
+
         while (WsnFunction.IF_noPATH(cluster[i])){
-            cluster[i] = WsnFunction.multihop_PATH(cluster[i]);
+            cluster[i] = WsnFunction.multihop_PATH(cluster[i]); //初选cluster[i]的多跳路径
 
 //        for(int j=0;j < cluster[i].length;j++){
 //            if (!cluster[i][j].isClover)  {

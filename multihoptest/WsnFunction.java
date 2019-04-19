@@ -113,6 +113,28 @@ public class WsnFunction {
     }
 
 
+//    if (cluster[i].length!=0)
+//            for (int j=0;j < cluster[i].length; j++)
+//            if(cluster[i][j].isClover)  cluster[i][j].erRateEFF=cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location,Anchor[i]));
+//
+//        for(int j=0;j < cluster[i].length;j++){
+//        if (!cluster[i][j].isClover)  {
+//            int     nextHOP=-1 ;
+//            double maxERrate=0;
+//            boolean change =false;
+//            for (int f=0;f < cluster[i].length;f++){
+//                if (cluster[i][f].isClover && cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]))*cluster[i][f].erRateEFF > maxERrate )     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+//                    maxERrate = cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j],cluster[i][f]))*cluster[i][f].erRateEFF;
+//                nextHOP = f;
+//                change  = true;
+//            }
+//            //若多跳效率大于阈值（0.1），则确定该多跳路径
+//            if (maxERrate > 0.1) {
+//                cluster[i][j].erRateEFF = cluster[i][j].getERRate(Sensor.getDistance(cluster[i][j], cluster[i][nextHOP])) * cluster[i][nextHOP].erRateEFF;   //多跳效率为多跳路径中每一段效率累乘。
+//                cluster[i][j].multihop = nextHOP;
+//            }
+
+
     //初步选取多跳路径
     public static Sensor[] multihop_PATH(Sensor[] cluster){
 
@@ -122,14 +144,16 @@ public class WsnFunction {
                 double maxERrate=0;
                 boolean change =false;
                 for (int f=0;f < cluster.length;f++){
-                    if (cluster[f].isClover && cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f])) > maxERrate ){     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
-                        maxERrate = cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f]));
+                    if (cluster[f].isClover && cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f]))*cluster[f].erRateEFF > maxERrate ){     //如果选择的下一跳节点为MC直接覆盖节点，且以此为其中继节点能量传输效率高，则记录此中继节点
+                        maxERrate = cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[f]))*cluster[f].erRateEFF ;
                         nextHOP = f;
                         change  = true;
                     }
                 }
-                cluster[i].erRateEFF=cluster[i].getERRate(Sensor.getDistance(cluster[i],cluster[nextHOP]));
-                cluster[i].multihop = cluster[nextHOP].number;
+
+                    cluster[i].erRateEFF = cluster[i].getERRate(Sensor.getDistance(cluster[i], cluster[nextHOP])) * cluster[nextHOP].erRateEFF;     //多跳效率为多跳路径中每一段效率累乘。
+                    cluster[i].multihop = cluster[nextHOP].number;                                                                                  //确定该节点i的下一跳节点。
+
             }
         }
         return cluster ;
