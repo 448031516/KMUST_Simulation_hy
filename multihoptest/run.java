@@ -5,9 +5,9 @@ public class run {
 
     public static void main(String[] args) {
         //网络规模
-        double networkSize = 2000;
+        double networkSize = 200;
         //传感器节点个数
-        int nodenum = 15000;
+        int nodenum = 1500;
         //系统当前时间初始为0s
         int systemTime = 0;
         //能量消耗率最小值
@@ -23,8 +23,8 @@ public class run {
 //        for(Sensor node:allSensor) {
 //            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
 //        }
-        honeycomb test = new honeycomb(27.00, 2100.00);    //创建蜂窝
-        Point[] k = test.creat_honeycomb(27.00, 2100.00);//获取每个蜂窝的中心坐标
+        honeycomb test = new honeycomb(8, 210.00);    //创建蜂窝
+        Point[] k = test.creat_honeycomb(8, 210.00);//获取每个蜂窝的中心坐标
 
         for (int i = 0; i < allSensor.length; i++) {                //将节点分簇，每个节点的inHoneycomb值表示其所在的簇
             allSensor[i].inHoneycomb = WsnFunction.judgeHoneycomb(allSensor[i], test);
@@ -80,7 +80,7 @@ public class run {
                 h++;// h作为newArr数组的下标，没写如一个值，下标h加1
             }
         }
-//
+
 //        for (Point node:newAnchor
 //             ) {
 //            System.out.println("第"+node.num+"个簇的锚点坐标为（"+node.x+"，"+node.y+"),且以此为锚点，MC能覆盖到的节点个数为：");
@@ -105,7 +105,7 @@ public class run {
            }
            cluster[i] = new Sensor[num];
             for (int j=0; j < allSensor.length;j++) {
-                if(allSensor[j].inHoneycomb==i) cluster[i][f++] = allSensor[i];
+                if(allSensor[j].inHoneycomb==i) cluster[i][f] = allSensor[j]; f++;
             }
         }
        // System.out.println(cluster.length);
@@ -130,63 +130,63 @@ public class run {
         * 6.根据以上算法遍历所有簇
         *
         * */
-    for (int i=0;i < cluster.length;i++) {
-
-        for (int j=0;j < cluster[i].length; j++)
-            if(cluster[i][j].isClover)  cluster[i][j].erRateEFF=cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location,Anchor[i]));
-
-        while (WsnFunction.IF_noPATH(cluster[i])){
-            cluster[i] = WsnFunction.multihop_PATH(cluster[i]); //初选cluster[i]的多跳路径
-
-
-            //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
-            double maxERrate = 0;
-            int sensor_maxERrate = -1;
-            for (int f1 = 0; f1 < cluster[i].length; f1++) {
-                if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate) {
-                    maxERrate = cluster[i][f1].erRateEFF;
-                    sensor_maxERrate = f1;
-                }
-            }
-            if (sensor_maxERrate >= 0) {
-                cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
-            }
-        }
-        //排除多跳效率过低的路径
-        for (int j=0;j < cluster[i].length; j++)
-            if (cluster[i][j].erRateEFF < THR_erRateEFF)    {
-                cluster[i][j].isClover = false ;
-                cluster[i][j].multihop = -1 ;
-            }
-
-    }
-
-
-
-
-
-
-//        //========================TSP开始========================
-//        //使用遗传算法
-//        int[] best; //best[]中存放tsp输出顺序
+//    for (int i=0;i < cluster.length;i++) {
 //
-//        //=======================method 1=======================
-//        GeneticAlgorithm ga = new GeneticAlgorithm();
-//        best = ga.tsp(getDist(Anchor));
+//        for (int j=0;j < cluster[i].length; j++)
+//            if(cluster[i][j].isClover)  cluster[i][j].erRateEFF=cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location,Anchor[i]));
 //
-//        int n = 0;
-//        while (n++ < 100) {
-//            best = ga.nextGeneration();
+//        while (WsnFunction.IF_noPATH(cluster[i])){
+//            cluster[i] = WsnFunction.multihop_PATH(cluster[i]); //初选cluster[i]的多跳路径
 //
-//            System.out.println("best distance:" + ga.getBestDist() +
-//                    " current generation:" + ga.getCurrentGeneration() +
-//                    " mutation times:" + ga.getMutationTimes());
-//            System.out.print("best path:");
-//            for (int i = 0; i < best.length; i++) {
-//                System.out.print(best[i] + " ");
+//
+//            //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
+//            double maxERrate = 0;
+//            int sensor_maxERrate = -1;
+//            for (int f1 = 0; f1 < cluster[i].length; f1++) {
+//                if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate) {
+//                    maxERrate = cluster[i][f1].erRateEFF;
+//                    sensor_maxERrate = f1;
+//                }
 //            }
-//            System.out.println();
+//            if (sensor_maxERrate >= 0) {
+//                cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
+//            }
 //        }
+//        //排除多跳效率过低的路径
+//        for (int j=0;j < cluster[i].length; j++)
+//            if (cluster[i][j].erRateEFF < THR_erRateEFF)    {
+//                cluster[i][j].isClover = false ;
+//                cluster[i][j].multihop = -1 ;
+//            }
+//
+//    }
+
+
+
+
+
+
+        //========================TSP开始========================
+        //使用遗传算法
+        int[] best; //best[]中存放tsp输出顺序
+
+        //=======================method 1=======================
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        best = ga.tsp(getDist(newAnchor));
+
+        int n = 0;
+        while (n++ < 100) {
+            best = ga.nextGeneration();
+
+            System.out.println("best distance:" + ga.getBestDist() +
+                    " current generation:" + ga.getCurrentGeneration() +
+                    " mutation times:" + ga.getMutationTimes());
+            System.out.print("best path:");
+            for (int i = 0; i < best.length; i++) {
+                System.out.print(best[i] + " ");
+            }
+            System.out.println();
+        }
 
         //=======================method 2========================
 //        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();

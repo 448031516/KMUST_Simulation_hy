@@ -150,10 +150,10 @@ public class WsnFunction {
                         change  = true;
                     }
                 }
-
+                if (nextHOP >= 0) {
                     cluster[i].erRateEFF = cluster[i].getERRate(Sensor.getDistance(cluster[i], cluster[nextHOP])) * cluster[nextHOP].erRateEFF;     //多跳效率为多跳路径中每一段效率累乘。
                     cluster[i].multihop = cluster[nextHOP].number;                                                                                  //确定该节点i的下一跳节点。
-
+                }
             }
         }
         return cluster ;
