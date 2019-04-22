@@ -160,12 +160,18 @@ public class WsnFunction {
     }
     //查询簇中是否还存在没有分配多跳路径的节点，存在没有分配多跳路径的节点就返回true ，否则false
     public static boolean IF_noPATH (Sensor[] cluster){
-        boolean judge = false;
-        for (int i=0;i < cluster.length; i++){
-            if (!cluster[i].isClover)    judge = true;
+        boolean judge = false ;
+        if (cluster.length!=0) {
+            for (int i = 0; i < cluster.length; i++) {
+                if (!cluster[i].isClover) judge = true;
+            }
         }
-         return judge;
+        return judge;
     }
+    //查询簇中是否没有任何节点是被MC直接覆盖的，对于没有
+//    public static boolean IF_noCLOVER(Sensor[] cluster){
+//
+//    }
 
 
 

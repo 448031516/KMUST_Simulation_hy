@@ -105,9 +105,14 @@ public class run {
            }
            cluster[i] = new Sensor[num];
             for (int j=0; j < allSensor.length;j++) {
-                if(allSensor[j].inHoneycomb==i) cluster[i][f] = allSensor[j]; f++;
+                if(allSensor[j].inHoneycomb==i) {
+                    cluster[i][f] = allSensor[j]; f++;
+                }
             }
         }
+//        for (int i=0;i < cluster.length; i++){
+//            System.out.println( cluster[i].length);
+//        }
        // System.out.println(cluster.length);
     // 第i个簇中
 
@@ -130,63 +135,67 @@ public class run {
         * 6.根据以上算法遍历所有簇
         *
         * */
-//    for (int i=0;i < cluster.length;i++) {
-//
-//        for (int j=0;j < cluster[i].length; j++)
-//            if(cluster[i][j].isClover)  cluster[i][j].erRateEFF=cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location,Anchor[i]));
-//
-//        while (WsnFunction.IF_noPATH(cluster[i])){
-//            cluster[i] = WsnFunction.multihop_PATH(cluster[i]); //初选cluster[i]的多跳路径
-//
-//
-//            //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
-//            double maxERrate = 0;
-//            int sensor_maxERrate = -1;
-//            for (int f1 = 0; f1 < cluster[i].length; f1++) {
-//                if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate) {
-//                    maxERrate = cluster[i][f1].erRateEFF;
-//                    sensor_maxERrate = f1;
-//                }
-//            }
-//            if (sensor_maxERrate >= 0) {
-//                cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
-//            }
-//        }
-//        //排除多跳效率过低的路径
-//        for (int j=0;j < cluster[i].length; j++)
-//            if (cluster[i][j].erRateEFF < THR_erRateEFF)    {
-//                cluster[i][j].isClover = false ;
-//                cluster[i][j].multihop = -1 ;
-//            }
-//
-//    }
+    for (int i=0;i < cluster.length;i++) {
 
 
-
-
-
-
-        //========================TSP开始========================
-        //使用遗传算法
-        int[] best; //best[]中存放tsp输出顺序
-
-        //=======================method 1=======================
-        GeneticAlgorithm ga = new GeneticAlgorithm();
-        best = ga.tsp(getDist(newAnchor));
-
-        int n = 0;
-        while (n++ < 100) {
-            best = ga.nextGeneration();
-
-            System.out.println("best distance:" + ga.getBestDist() +
-                    " current generation:" + ga.getCurrentGeneration() +
-                    " mutation times:" + ga.getMutationTimes());
-            System.out.print("best path:");
-            for (int i = 0; i < best.length; i++) {
-                System.out.print(best[i] + " ");
+        for (int j=0;j < cluster[i].length; j++) {
+            if (cluster[i][j].isClover){
+                cluster[i][j].erRateEFF = cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location, Anchor[i]));
             }
-            System.out.println();
         }
+
+        while (WsnFunction.IF_noPATH(cluster[i])) {
+            cluster[i] = WsnFunction.multihop_PATH(cluster[i]); //初选cluster[i]的多跳路径
+
+
+            //从得到的所有未被覆盖节点中选取erRateEFF最大的节点及其路径（下一跳）
+            double maxERrate = 0;
+            int sensor_maxERrate = -1;
+            for (int f1 = 0; f1 < cluster[i].length; f1++) {
+                if (!cluster[i][f1].isClover && cluster[i][f1].erRateEFF > maxERrate) {
+                    maxERrate = cluster[i][f1].erRateEFF;
+                    sensor_maxERrate = f1;
+                }
+            }
+            if (sensor_maxERrate >= 0) {
+                cluster[i][sensor_maxERrate].isClover = true;//将最大erRateEFF的节点加入到已覆盖的集合中
+            }
+        }
+       // 排除多跳效率过低的路径
+        for (int j=0;j < cluster[i].length; j++)
+            if (cluster[i][j].erRateEFF < THR_erRateEFF)    {
+                cluster[i][j].isClover = false ;
+                cluster[i][j].multihop = -1 ;
+            }
+
+    }
+
+        System.out.println(cluster.length+"..."+WsnFunction.IF_noPATH(cluster[223]));
+
+
+
+//
+//        //========================TSP开始========================
+//        //使用遗传算法
+//        int[] best; //best[]中存放tsp输出顺序
+//
+//        //=======================method 1=======================
+//        GeneticAlgorithm ga = new GeneticAlgorithm();
+//        best = ga.tsp(getDist(newAnchor));
+//
+//        int n = 0;
+//        while (n++ < 100) {
+//            best = ga.nextGeneration();
+//
+//            System.out.println("best distance:" + ga.getBestDist() +
+//                    " current generation:" + ga.getCurrentGeneration() +
+//                    " mutation times:" + ga.getMutationTimes());
+//            System.out.print("best path:");
+//            for (int i = 0; i < best.length; i++) {
+//                System.out.print(best[i] + " ");
+//            }
+//            System.out.println();
+//        }
 
         //=======================method 2========================
 //        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
