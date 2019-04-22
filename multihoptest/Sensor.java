@@ -71,7 +71,7 @@ public class Sensor {
         if (distance == MCV.maxRadius) nta = 0.2;
         else {
             //能量传递效率[0.2,1]
-            nta = -0.0958 * Math.pow(distance*2.7/8, 2) - 0.0377 * (distance*2.7/8) + 1.0;//nta是效率
+            nta = -0.0958 * Math.pow(distance*2.7/8, 2) - 0.0377 * (distance*2.7/8) + 1.0;//nta是效率                  //此处有问题
         }
         if (nta > 0.2) return nta;
         else return nta = -1;

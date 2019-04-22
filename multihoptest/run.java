@@ -162,12 +162,12 @@ public class run {
             }
         }
        // 排除多跳效率过低的路径
-        for (int j=0;j < cluster[i].length; j++)
-            if (cluster[i][j].erRateEFF < THR_erRateEFF)    {
-                cluster[i][j].isClover = false ;
-                cluster[i][j].multihop = -1 ;
+        for (int j=0;j < cluster[i].length; j++) {
+            if (cluster[i][j].erRateEFF < THR_erRateEFF) {
+                cluster[i][j].isClover = false;
+                cluster[i][j].multihop = -1;
             }
-
+        }
     }
 
         System.out.println(cluster.length+"..."+WsnFunction.IF_noPATH(cluster[223]));
