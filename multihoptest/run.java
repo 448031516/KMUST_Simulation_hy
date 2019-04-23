@@ -141,6 +141,7 @@ public class run {
         for (int j=0;j < cluster[i].length; j++) {
             if (cluster[i][j].isClover){
                 cluster[i][j].erRateEFF = cluster[i][j].getERRate(Point.getDistance(cluster[i][j].location, Anchor[i]));
+                cluster[i][j].multihop = -2 ;           //MC直接覆盖的节点，其下一跳标记为-2
             }
         }
 
@@ -169,16 +170,17 @@ public class run {
             }
         }
     }
+//    for (int i=0;i < cluster.length; i++){
+//        for (int j=0; j < cluster[i].length;j++)
+//        System.out.println(cluster.length+"..."+cluster[i][j].multihop);}
 
-        System.out.println(cluster.length+"..."+WsnFunction.IF_noPATH(cluster[223]));
 
 
 
-//
-//        //========================TSP开始========================
-//        //使用遗传算法
-//        int[] best; //best[]中存放tsp输出顺序
-//
+        //========================TSP开始========================
+        //使用遗传算法
+        int[] best; //best[]中存放tsp输出顺序
+
 //        //=======================method 1=======================
 //        GeneticAlgorithm ga = new GeneticAlgorithm();
 //        best = ga.tsp(getDist(newAnchor));
@@ -198,16 +200,19 @@ public class run {
 //        }
 
         //=======================method 2========================
-//        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
-//
-//        ga.setMaxGeneration(1000);
-//        ga.setAutoNextGeneration(true);
-//        best = ga.tsp(getDist(Anchor));
-//        System.out.print("best path:");
-//        for (int i = 0; i < best.length; i++) {
-//            System.out.print(best[i] + " ");
-//        }
-//        System.out.println();
+        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
+
+        ga.setMaxGeneration(1000);
+        ga.setAutoNextGeneration(true);
+        best = ga.tsp(getDist(newAnchor));
+        System.out.print("best path:");
+        for (int i = 0; i < best.length; i++) {
+            System.out.print(best[i] + " ");
+        }
+        System.out.println("..............."+best.length);
+
+
+
     }
 
 
