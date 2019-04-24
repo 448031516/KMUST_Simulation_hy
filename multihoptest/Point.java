@@ -4,14 +4,14 @@ import java.text.DecimalFormat;
 
 public class Point {
 
-    double x;
-    double y;
+    float x;
+    float y;
     int num;
-    public Point(double lx,double ly) {
+    public Point(float lx, float ly) {
         x = lx;
         y = ly;
     }
-    public Point(int n,double lx,double ly) {
+    public Point(int n, float lx, float ly) {
         // TODO Auto-generated constructor stub
         x = lx;
         y = ly;
@@ -23,13 +23,13 @@ public class Point {
         num=0;
     }
     //求平面两点之间的距离
-    public static double getDistance(Point p1,Point p2) {
-        double distance = 0.0;
+    public static float getDistance(Point p1, Point p2) {
+        float distance = 0.0f;
         //X轴的距离平方
         double dx = Math.pow(p1.x-p2.x, 2);
         //Y轴的距离平方
         double dy = Math.pow(p1.y-p2.y, 2);
-        distance = Math.sqrt(dx+dy);
+        distance = (float) (Math.sqrt(dx+dy));
         return distance;
     }
 
@@ -40,8 +40,8 @@ public class Point {
         int n = points.length;
         if(n == 1) return points[0];
         //坐标点的平均值
-        double x = 0;
-        double y = 0;
+        float x = 0;
+        float y = 0;
         //遍历边界点求边界点坐标的算术平均数
         for (Point p : points) {
             x += p.x;
@@ -53,8 +53,8 @@ public class Point {
 
         //新建格式化器,保留两位小数
         DecimalFormat Dformat = new DecimalFormat("0.000");
-        x = Double.parseDouble(Dformat.format(x));
-        y = Double.parseDouble(Dformat.format(y));
+        x = Float.parseFloat(Dformat.format(x));
+        y = Float.parseFloat(Dformat.format(y));
 
         return new Point(x,y);
     }

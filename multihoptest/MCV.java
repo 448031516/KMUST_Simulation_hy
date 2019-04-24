@@ -3,10 +3,10 @@ package multihoptest;
 public class MCV {
 
     static Point location = new Point(0,0);//小车的位置
-    static double maxRadius = 8;//充电半径
-    static double v = 2;//小车速度2m/s
-    static double transPower = 5;//充电能耗为5W=5J/s
-    static double travelPower= 8;//行驶能耗J/m
+    static float maxRadius = 8;//充电半径
+    static float v = 2;//小车速度2m/s
+    static float transPower = 5;//充电能耗为5W=5J/s
+    static float travelPower= 8;//行驶能耗J/m
     static Point[] Anchor={ };
 
     /**

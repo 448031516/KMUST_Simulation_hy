@@ -1,30 +1,29 @@
 package multihoptest;
 
-import java.io.*;
 public class honeycomb {
     public    Point[] location;                   //每个蜂窝正六边形的中心坐标位置及其编号
-    public   double edge;                      //正六边形的边长
-    private  double networkSize;             //方形网络边长
+    public float edge;                      //正六边形的边长
+    private float networkSize;             //方形网络边长
 
-    public  honeycomb(double _edge, double _networkSize){
+    public  honeycomb(float _edge, float _networkSize){
         edge=_edge;
         networkSize=_networkSize;
         location=new Point[getHONEYCOMB_NUM()];
-        double x;
-        double y;
+        float x;
+        float y;
         int p=0,xi=0;
         for(;xi<=networkSize/(edge*Math.sqrt(3)/2);xi++){
             int yi=0;
             for(;yi<=networkSize/(edge*3/2);yi++){
                 if(xi%2==0&&yi%2==0) {
                     y=yi*edge*3/2;
-                    x=xi*edge*Math.sqrt(3)/2;
+                    x=(float) (xi*edge*Math.sqrt(3)/2);
                     location[p]=new Point(p,x,y);
                     p++;
                 }
                 else if(xi%2!=0&&yi%2!=0){
                     y=yi*edge*3/2;
-                    x=xi*edge*Math.sqrt(3)/2;
+                    x=(float) (xi*edge*Math.sqrt(3)/2);
                     location[p]=new Point(p,x,y);
                     p++;
                 }
@@ -32,25 +31,25 @@ public class honeycomb {
         }
     }
     //生成蜂窝并返回蜂窝中心点
-    public Point[] creat_honeycomb(double __edge , double __networkSize ){
+    public Point[] creat_honeycomb(float __edge , float __networkSize ){
         edge=__edge;
         networkSize=__networkSize;
         location=new Point[getHONEYCOMB_NUM()];
-        double x;
-        double y;
+        float x;
+        float y;
         int p=0,xi=0;
         for(;xi<=networkSize/(edge*Math.sqrt(3)/2);xi++){
             int yi=0;
             for(;yi<=networkSize/(edge*3/2);yi++){
                 if(xi%2==0&&yi%2==0) {
                     y=yi*edge*3/2;
-                    x=xi*edge*Math.sqrt(3)/2;
+                    x=(float) (xi*edge*Math.sqrt(3)/2);
                     location[p]=new Point(p,x,y);
                     p++;
                 }
                 else if(xi%2!=0&&yi%2!=0){
                     y=yi*edge*3/2;
-                    x=xi*edge*Math.sqrt(3)/2;
+                    x=(float) (xi*edge*Math.sqrt(3)/2);
                     location[p]=new Point(p,x,y);
                     p++;
                 }
@@ -88,8 +87,8 @@ public class honeycomb {
 //    }
 //    测试方法
     public static void main(String[] args){
-        honeycomb test =new honeycomb(4.00,200.00);
-        Point[] k =test.creat_honeycomb(4.00,200.00);
+        honeycomb test =new honeycomb(4.00f,200.00f);
+        Point[] k =test.creat_honeycomb(4.00f,200.00f);
         System.out.println("----------------------------------------------");
         for(int i=0;i<k.length;i++) {
             System.out.println("第"+k[i].num+"个"+"坐标("+k[i].x+","+k[i].y+")");

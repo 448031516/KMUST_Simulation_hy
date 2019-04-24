@@ -5,15 +5,15 @@ public class run {
 
     public static void main(String[] args) {
         //网络规模
-        double networkSize = 200;
+        float networkSize = 200;
         //传感器节点个数
         int nodenum = 1500;
         //系统当前时间初始为0s
         int systemTime = 0;
         //能量消耗率最小值
-        double minECR = 0.01;
+        float minECR = 0.01f;
         //能量消耗率最大值
-        double maxECR = 0.06;
+        float maxECR = 0.06f;
         //多跳阈值
         float THR_erRateEFF = 0.1f;
 
@@ -23,8 +23,8 @@ public class run {
 //        for(Sensor node:allSensor) {
 //            System.out.println("编号:"+node.number+" 坐标:("+node.location.x+","+node.location.y+") 剩余能量阈值:"+node.remainingE/node.maxCapacity +" 剩余寿命:"+node.remainingE/node.ecRate);
 //        }
-        honeycomb test = new honeycomb(8, 210.00);    //创建蜂窝
-        Point[] k = test.creat_honeycomb(8, 210.00);//获取每个蜂窝的中心坐标
+        honeycomb test = new honeycomb(8f, 210.00f);    //创建蜂窝
+        Point[] k = test.creat_honeycomb(8f, 210.00f);//获取每个蜂窝的中心坐标
 
         for (int i = 0; i < allSensor.length; i++) {                //将节点分簇，每个节点的inHoneycomb值表示其所在的簇
             allSensor[i].inHoneycomb = WsnFunction.judgeHoneycomb(allSensor[i], test);

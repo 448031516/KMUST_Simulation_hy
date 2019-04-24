@@ -7,11 +7,11 @@ public class Sensor {
 
     int number = 0;//节点编号
     Point location = null;//节点的位置
-    double maxCapacity = 50;//电池容量默认50J,所有节点都一样
-    double ecRate = 0;//平均能量消耗率J/s,距离基站越近消耗越大
-    double erRate = 0;//能量接受率[1,5],与小车位置有关,需要确定好小车充电停止点后,才能确定节点能量接受率
-    double erRateEFF = 0;//能量接收效率，erRate=erRateEFF*maxP
-    double remainingE = 50;//初始剩余能量等于电池容量
+    float maxCapacity = 50;//电池容量默认50J,所有节点都一样
+    float ecRate = 0;//平均能量消耗率J/s,距离基站越近消耗越大
+    float erRate = 0;//能量接受率[1,5],与小车位置有关,需要确定好小车充电停止点后,才能确定节点能量接受率
+    float erRateEFF = 0;//能量接收效率，erRate=erRateEFF*maxP
+    float remainingE = 50;//初始剩余能量等于电池容量
     boolean isCharging = false;//是否需要充电,默认为false表示不需要充电
     boolean isFailure = false;//表示节点是否死亡,false表示未死亡
     int inHoneycomb ; //节点所属的簇
@@ -19,13 +19,13 @@ public class Sensor {
     int multihop = -1;    //未被直接覆盖的节点，其多跳充电的下一条
 
     //初始化传感器编号位置,节点能耗为指定值
-    public Sensor(int number,double lx,double ly,double ecr) {
+    public Sensor(int number, float lx, float ly, float ecr) {
         this.number = number;
         location = new Point(lx, ly);
         ecRate = ecr;
     }
     //初始化传感器编号、位置、能耗
-    public Sensor(int number,double lx,double ly,double networkSize,double minECR,double maxECR) {
+    public Sensor(int number, float lx, float ly, float networkSize, float minECR, float maxECR) {
         this.number = number;
         location = new Point(lx, ly);
         //根据节点与基站的距离计算出节点的能耗
@@ -33,31 +33,31 @@ public class Sensor {
     }
 
     //初始化编号、位置、能耗和容量
-    public Sensor(int number,double lx,double ly,int networkSize,double minECR,double maxECR,int maxC) {
+    public Sensor(int number, float lx, float ly, int networkSize, float minECR, float maxECR, int maxC) {
         this.number = number;
         location = new Point(lx, ly);
         ecRate = calECRate(Point.getDistance(location,new Point(networkSize/2, networkSize/2)), networkSize, minECR, maxECR);
         maxCapacity = maxC;//初始能量
         remainingE = maxC;//初始剩余能量等于电池容量
     }
-    public static double getDistance(Sensor p1,Sensor p2) {
-        double distance = 0.0;
+    public static float getDistance(Sensor p1, Sensor p2) {
+        float distance = 0.0f;
         //X轴的距离平方
         double dx = Math.pow(p1.location.x-p2.location.x, 2);
         //Y轴的距离平方
         double dy = Math.pow(p1.location.y-p2.location.y, 2);
-        distance = Math.sqrt(dx+dy);
+        distance = (float)(Math.sqrt(dx+dy));
         return distance;
     }
 
     //根据节点与基站之间的距离以及网络大小和能量消耗区间,计算某个节点的能量消耗率
-    private double calECRate(double distance,double networkSize,double minECR,double maxECR) {
+    private float calECRate(double distance, double networkSize, double minECR, double maxECR) {
         //基站位置在正方形区域的中心
         double bs = networkSize/2.0;
         //节点与基站之间的最大距离;最小距离为0
         double maxDistance = Math.sqrt(2)*bs;
         //节点的能耗与其和基站的距离是线性关系,且两者成反比:与基站距离越小,能量消耗率越大
-        double ec = minECR + (1-(distance/maxDistance))*(maxECR-minECR);
+        float ec = (float) (minECR + (1-(distance/maxDistance))*(maxECR-minECR));
         //新建格式化器，设置格式
                             //        DecimalFormat Dformat = new DecimalFormat("0.00");
 //        String string = Dformat.format(ec);
@@ -66,12 +66,12 @@ public class Sensor {
     }
 
 
-    public double getERRate(double distance) {
-        double nta;
-        if (distance == MCV.maxRadius) nta = 0.2;
+    public float getERRate(float distance) {
+        float nta;
+        if (distance == MCV.maxRadius) nta = 0.2f;
         else {
             //能量传递效率[0.2,1]
-            nta = -0.0958 * Math.pow(distance*2.7/16, 2) - 0.0377 * (distance*2.7/16) + 1.0;//nta是效率                  //此处有问题
+            nta = (float) (-0.0958 * Math.pow(distance*2.7/16, 2) - 0.0377 * (distance*2.7/16) + 1.0);//nta是效率                  //此处有问题
         }
         if (nta > 0.2) return nta;
         else return nta = -1;

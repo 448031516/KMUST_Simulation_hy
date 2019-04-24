@@ -25,8 +25,8 @@ public class WsnFunction {
     public static int judgeHoneycomb(Sensor i,honeycomb j){
         int p=0;
         for (;p<=j.location.length-1;p++) {
-            double  x= Math.abs(i.location.x - j.location[p].x);
-            double  y= Math.abs(i.location.y - j.location[p].y);
+            float x= Math.abs(i.location.x - j.location[p].x);
+            float y= Math.abs(i.location.y - j.location[p].y);
             if (j.edge-y>x/Math.sqrt(3))
                 break;
         }
@@ -35,7 +35,7 @@ public class WsnFunction {
     }
 //判断传感器是否在MC直接覆盖区域内
     public static boolean judge_inMC(Sensor i){
-        double distance = Point.getDistance(i.location,MCV.location);
+        float distance = Point.getDistance(i.location,MCV.location);
         if(distance>=MCV.maxRadius) return false;
         else return true;
     }
@@ -44,11 +44,11 @@ public class WsnFunction {
         Point[][] anchor = new Point[q.location.length][6];
         for(int i=0;i<q.location.length;i++) {
             anchor[i][0] = new Point(q.location[i].num,q.location[i].x, q.location[i].y + q.edge);
-            anchor[i][1] = new Point(q.location[i].num,q.location[i].x + Math.sqrt(3)*q.edge/2, q.location[i].y + q.edge/2);
-            anchor[i][2] = new Point(q.location[i].num,q.location[i].x + Math.sqrt(3)*q.edge/2, q.location[i].y - q.edge/2);
+            anchor[i][1] = new Point(q.location[i].num,q.location[i].x + (float) (Math.sqrt(3)*q.edge/2), q.location[i].y + q.edge/2);
+            anchor[i][2] = new Point(q.location[i].num,q.location[i].x + (float) (Math.sqrt(3)*q.edge/2), q.location[i].y - q.edge/2);
             anchor[i][3] = new Point(q.location[i].num,q.location[i].x, q.location[i].y - q.edge);
-            anchor[i][4] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y - q.edge/2);
-            anchor[i][5] = new Point(q.location[i].num,q.location[i].x - Math.sqrt(3)*q.edge/2, q.location[i].y + q.edge/2);
+            anchor[i][4] = new Point(q.location[i].num,q.location[i].x - (float) (Math.sqrt(3)*q.edge/2), q.location[i].y - q.edge/2);
+            anchor[i][5] = new Point(q.location[i].num,q.location[i].x - (float) (Math.sqrt(3)*q.edge/2), q.location[i].y + q.edge/2);
         }
         return anchor;
     }
@@ -74,8 +74,8 @@ public class WsnFunction {
 
 
     //在指定区间大小networkSize获得n个随机数
-    private static double[] getRandom(double networkSize,int n,long seed) {
-        double[] rm = new double[n];
+    private static float[] getRandom(double networkSize, int n, long seed) {
+        float[] rm = new float[n];
         double rd = 0.0;
         Random random = new Random(seed);
         //新建格式化器，设置格式,保留两位小数
@@ -85,23 +85,23 @@ public class WsnFunction {
             //根据格式化器格式化数据
             String rdStr = Dformat.format(rd);
             //将String转为double
-            rm[i] = Double.parseDouble(rdStr);
+            rm[i] = Float.parseFloat(rdStr);
         }
         return rm;
     }
 
 
     //初始化n个节点
-    public static Sensor[] initSensors(double networkSize,int n,double minECR,double maxECR) {
+    public static Sensor[] initSensors(float networkSize, int n, float minECR, float maxECR) {
         //X轴的随机种子数
         long seedX = 92837;
         //Y轴的随机种子数
         long seedY = 626626;
         //横坐标50个随机数
-        double[] dx = WsnFunction.getRandom(networkSize,n,seedX);
+        float[] dx = WsnFunction.getRandom(networkSize,n,seedX);
         //System.out.println(Arrays.toString(dx));
         //纵坐标50个随机数
-        double[] dy = WsnFunction.getRandom(networkSize,n,seedY);
+        float[] dy = WsnFunction.getRandom(networkSize,n,seedY);
         //System.out.println(Arrays.toString(dy));
         Sensor[] sensors = new Sensor[n];
         //对n个传感器节点初始化

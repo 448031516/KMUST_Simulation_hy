@@ -1,8 +1,5 @@
 package multihoptest;
 
-import multihoptest.GeneticAlgorithm;
-import multihoptest.Point;
-
 import java.util.Random;
 
 /**
