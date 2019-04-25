@@ -11,6 +11,7 @@ public class Sensor {
     float ecRate = 0;//平均能量消耗率J/s,距离基站越近消耗越大
     float erRate = 0;//能量接受率[1,5],与小车位置有关,需要确定好小车充电停止点后,才能确定节点能量接受率
     float erRateEFF = 0;//能量接收效率，erRate=erRateEFF*maxP
+    float ctime ;
     float remainingE = 50;//初始剩余能量等于电池容量
     boolean isCharging = false;//是否需要充电,默认为false表示不需要充电
     boolean isFailure = false;//表示节点是否死亡,false表示未死亡
