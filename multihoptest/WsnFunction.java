@@ -188,7 +188,7 @@ public class WsnFunction {
         return chargingTime;
     }
 
-
+/*
     //求行驶路径的长度
     public static double getPathLength(Group[] group) {
 
@@ -212,7 +212,7 @@ public class WsnFunction {
             chargingEnergy += eg.cEnergy;
         }
         return chargingEnergy;
-    }
+    }*/
 
 
     //更新其他本轮未充电节点的剩余能量
@@ -250,15 +250,15 @@ public class WsnFunction {
 
 
     //创建一对一充电的分组
-    public static Group[] onetoOneGroup(double networkSize,Sensor...chargingSensor) {
-        Group[] groups = new Group[chargingSensor.length+1];
-        groups[0] = new Group(0,new Point(networkSize/2,networkSize/2));
-        for(int i=1;i < groups.length;i++) {     		//i:[1,chargingSensor.length]
-            //创建第i个分组
-            groups[i] = new Group(i,chargingSensor[i-1].location,chargingSensor[i-1]);
-        }
-        return groups;
-    }
+//    public static Group[] onetoOneGroup(double networkSize,Sensor...chargingSensor) {
+//        Group[] groups = new Group[chargingSensor.length+1];
+//        groups[0] = new Group(0,new Point(networkSize/2,networkSize/2));
+//        for(int i=1;i < groups.length;i++) {     		//i:[1,chargingSensor.length]
+//            //创建第i个分组
+//            groups[i] = new Group(i,chargingSensor[i-1].location,chargingSensor[i-1]);
+//        }
+//        return groups;
+//    }
 
 /*
     //测试方法

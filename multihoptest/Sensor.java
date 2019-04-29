@@ -106,9 +106,9 @@ public class Sensor {
         boolean isreachlc = false;
         if(lr <= lc) return -1;//阈值设置有误
         while(!isreachlc) {
-            //根据当前节点的剩余能量阈值,遍历所有节点,找出需要充电的节点
+            //根据当前节点的剩余能量,遍历所有节点,找出需要充电的节点
             for(int i=0;i<allsensor.length;i++) {
-                //计算当前节点的阈值
+                //计算当前节点电量的百分比
                 double threshold = allsensor[i].remainingE/allsensor[i].maxCapacity;
 
                 if(threshold >= lr) {

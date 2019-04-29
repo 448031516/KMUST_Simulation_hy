@@ -16,6 +16,10 @@ public class run {
         float maxECR = 0.06f;
         //多跳阈值
         float THR_erRateEFF = 0.1f;
+        //第一个请求充电的阈值，达到此阈值的传感器就可以被充电了
+        double lr = 0.3;
+        //第二个启动充电的阈值，也是唤醒MC的阈值
+        double lc = 0.2;
 
 
         Sensor[] allSensor = WsnFunction.initSensors(networkSize, nodenum, minECR, maxECR);
@@ -199,22 +203,31 @@ public class run {
 //            System.out.println();
 //        }
 
-        //=======================method 2========================
-        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
-
-        ga.setMaxGeneration(1000);
-        ga.setAutoNextGeneration(true);
-        best = ga.tsp(getDist(newAnchor));
-        System.out.print("best path:");
-        for (int i = 0; i < best.length; i++) {
-            System.out.print(best[i] + " ");
-        }
-        System.out.println("..............."+best.length);
+//        //=======================method 2========================
+//        GeneticAlgorithm ga = GeneticAlgorithm.getInstance();
+//
+//        ga.setMaxGeneration(1000);
+//        ga.setAutoNextGeneration(true);
+//        best = ga.tsp(getDist(newAnchor));
+//        System.out.print("best path:");
+//        for (int i = 0; i < best.length; i++) {
+//            System.out.print(best[i] + " ");
+//        }
+//        System.out.println("..............."+best.length);
 
 
 
 //========================系统开始运行========================
-
+        System.out.println("系统当前时间:"+systemTime);
+        //更新节点剩余能量,确定再经过多久需要启动下一轮充电
+        int nextTime = 0;
+        nextTime = Sensor.requestCharging(lr,lc,allSensor);
+        systemTime += nextTime;
+        System.out.println("下一轮充电还需:"+nextTime+"s");
+        if(nextTime == -1) {
+            System.out.println("阈值设置有误!");
+            return;
+        }
 
     }
 
